@@ -1,0 +1,6 @@
+> python3 -m http.server ${PORT:-4173}
+
+Serving HTTP on :: port 4173 (http://[::]:4173/) ...
+^C
+Keyboard interrupt received, exiting.
+
