@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project card motion | Visions Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..650;1,400..650&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f3f5f8;
+      --ink: #12161d;
+      --muted: rgba(18, 22, 29, 0.58);
+      --line: rgba(18, 22, 29, 0.1);
+      --accent: #1f4e8c;
+      --surface: #fff;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --hero-ease: cubic-bezier(0.38, 0, 0, 1);
+    }
+    html, body { overflow-x: clip; }
+    body {
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    .bar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+      padding: 0.85rem 1.25rem;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar strong { margin-right: auto; font-weight: 575; letter-spacing: -0.02em; }
+    .bar button {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font: 550 0.85rem "Instrument Sans", system-ui, sans-serif;
+      cursor: pointer;
+    }
+    .bar button[aria-pressed="true"] {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .note {
+      max-width: 760px;
+      margin: 1.25rem auto 0;
+      padding: 0 1.25rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .stage {
+      max-width: 1180px;
+      margin: 1.5rem auto 5rem;
+      padding: 1.5rem 1.5rem 4rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.25rem 1.5rem;
+    }
+    .card-wrap {
+      position: relative;
+    }
+    .card-wrap:nth-child(2) .card,
+    .card-wrap:nth-child(2) .chip { animation-delay: 0.16s; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+    }
+    .head { padding: 1.35rem 1.4rem 1.1rem; }
+    .kicker {
+      display: inline-block;
+      margin-bottom: 0.55rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    h3 {
+      font-weight: 575;
+      letter-spacing: -0.02em;
+      font-size: clamp(1.35rem, 1.9vw, 1.75rem);
+      line-height: 1.15;
+    }
+    .media {
+      height: 290px;
+      background: #e6e9ee;
+    }
+    .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .chip {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .chip-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 78%, white);
+      top: -12px; left: -8px;
+    }
+    .chip-pill {
+      width: 72px; height: 16px; border-radius: 99px;
+      background: var(--ink);
+      right: 18px; bottom: -8px;
+    }
+    .chip-sq {
+      width: 26px; height: 26px; border-radius: 8px;
+      background: #d5deea;
+      right: -8px; top: 22px;
+    }
+    .chip-win {
+      width: 108px;
+      left: -12px; bottom: -18px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 24px -18px rgba(18, 22, 29, 0.5);
+      overflow: hidden;
+    }
+    .chip-win .chrome {
+      display: flex; gap: 4px; align-items: center;
+      height: 18px; padding: 0 8px; background: #eef1f5;
+    }
+    .chip-win .chrome span {
+      width: 5px; height: 5px; border-radius: 50%; background: #c9d0da;
+    }
+    .chip-win .body {
+      height: 38px; margin: 6px; border-radius: 6px;
+      background: linear-gradient(135deg, #8aa4c6, #d7e3f2);
+    }
+
+    /* A: whole card slides up, like the headline */
+    [data-scene="slide"].play .card {
+      animation: card-slide 900ms var(--hero-ease) both;
+    }
+    [data-scene="slide"].play .chip-dot,
+    [data-scene="slide"].play .chip-pill {
+      animation: chip-land 700ms var(--ease) 260ms both;
+    }
+    [data-scene="slide"] .chip-sq,
+    [data-scene="slide"] .chip-win { display: none; }
+
+    /* B: card settles, UI chips gather around the card */
+    [data-scene="chips"].play .card {
+      animation: card-settle 900ms var(--ease) both;
+    }
+    [data-scene="chips"].play .chip-dot { animation: chip-a 700ms var(--ease) 180ms both; }
+    [data-scene="chips"].play .chip-sq { animation: chip-b 700ms var(--ease) 260ms both; }
+    [data-scene="chips"].play .chip-pill { animation: chip-c 700ms var(--ease) 320ms both; }
+    [data-scene="chips"].play .chip-win { animation: chip-d 750ms var(--ease) 220ms both; }
+
+    /* C: whole card opens like a window */
+    [data-scene="window"] .card-clip {
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    [data-scene="window"].play .card {
+      animation: card-window 1100ms var(--hero-ease) both;
+    }
+    [data-scene="window"].play .chip-dot {
+      animation: chip-land 700ms var(--ease) 480ms both;
+    }
+    [data-scene="window"] .chip-pill,
+    [data-scene="window"] .chip-sq,
+    [data-scene="window"] .chip-win { display: none; }
+
+    /* D: card slide + a few chips around the card */
+    [data-scene="combo"].play .card {
+      animation: card-slide 900ms var(--hero-ease) both;
+    }
+    [data-scene="combo"].play .chip-dot { animation: chip-land 700ms var(--ease) 240ms both; }
+    [data-scene="combo"].play .chip-pill { animation: chip-land 700ms var(--ease) 340ms both; }
+    [data-scene="combo"].play .chip-win { animation: chip-land 750ms var(--ease) 300ms both; }
+    [data-scene="combo"] .chip-sq { display: none; }
+
+    @keyframes card-slide {
+      from { opacity: 0; transform: translateY(18%); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes card-settle {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes card-window {
+      from { opacity: 1; transform: translateY(100%); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes chip-land {
+      from { opacity: 0; transform: translateY(14px) scale(0.86); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes chip-a {
+      from { opacity: 0; transform: translate(-16px, 12px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes chip-b {
+      from { opacity: 0; transform: translate(12px, -10px) rotate(-8deg); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes chip-c {
+      from { opacity: 0; transform: translate(16px, 10px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes chip-d {
+      from { opacity: 0; transform: translate(-10px, 16px) rotate(4deg); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: 1fr; }
+      .media { height: 220px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .chip { animation: none !important; opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Project card options</strong>
+    <button type="button" data-scene="slide" aria-pressed="true">A · Card slide</button>
+    <button type="button" data-scene="chips">B · UI chips</button>
+    <button type="button" data-scene="window">C · Window open</button>
+    <button type="button" data-scene="combo">D · Slide + chips</button>
+    <button type="button" id="replay">Replay</button>
+  </div>
+  <p class="note" id="note"></p>
+  <section class="stage">
+    <div class="grid" id="grid" data-scene="slide">
+      <div class="card-wrap">
+        <span class="chip chip-dot"></span>
+        <span class="chip chip-sq"></span>
+        <span class="chip chip-pill"></span>
+        <div class="chip chip-win">
+          <div class="chrome"><span></span><span></span><span></span></div>
+          <div class="body"></div>
+        </div>
+        <div class="card-clip">
+          <article class="card">
+            <div class="head">
+              <p class="kicker">Website</p>
+              <h3>Path to Peace Psychotherapy</h3>
+            </div>
+            <div class="media">
+              <img src="../assets/path-to-peace-preview.png" alt="">
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <span class="chip chip-dot"></span>
+        <span class="chip chip-sq"></span>
+        <span class="chip chip-pill"></span>
+        <div class="chip chip-win">
+          <div class="chrome"><span></span><span></span><span></span></div>
+          <div class="body"></div>
+        </div>
+        <div class="card-clip">
+          <article class="card">
+            <div class="head">
+              <p class="kicker">Organization website</p>
+              <h3>Bread Breakers</h3>
+            </div>
+            <div class="media">
+              <img src="../assets/bread-breakers-preview.png" alt="">
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    const notes = {
+      slide: "A. The whole card rises into place, same family as Websites that work. Two small shapes land on the card corners and stop.",
+      chips: "B. The whole card settles in. Website bits gather around the card, not on top of the screenshot.",
+      window: "C. The whole card loads like a page opening in a frame. One small shape, then rest.",
+      combo: "D. Whole-card slide plus a few chips around the card. Closest to the mix we talked about."
+    };
+    const grid = document.getElementById("grid");
+    const note = document.getElementById("note");
+    const buttons = [...document.querySelectorAll(".bar button[data-scene]")];
+    let timer;
+
+    function play() {
+      grid.classList.remove("play");
+      void grid.offsetWidth;
+      grid.classList.add("play");
+    }
+
+    function setScene(name) {
+      grid.dataset.scene = name;
+      note.textContent = notes[name];
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.scene === name)));
+      play();
+      clearInterval(timer);
+      timer = setInterval(play, 4200);
+    }
+
+    buttons.forEach((b) => b.addEventListener("click", () => setScene(b.dataset.scene)));
+    document.getElementById("replay").addEventListener("click", play);
+    setScene("slide");
+  </script>
+</body>
+</html>
