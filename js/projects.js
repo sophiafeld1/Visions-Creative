@@ -10,7 +10,8 @@ const siteConfig = {
     "assets/about_imgs/IMG_4939.jpeg",
     "assets/about_imgs/IMG_9166.jpeg",
   ],
-  title: "Visions Creative LLC — Websites for businesses",
+  kicker: "Design, engineering, and delivery",
+  title: "Visions Creative LLC | Websites for businesses",
   description:
     "Visions Creative LLC designs, builds, and launches websites for shops, practices, and organizations.",
   linkedinUrl: "https://www.linkedin.com/in/sophia-feldman/",
@@ -20,7 +21,7 @@ const siteConfig = {
   about:
     "I build websites for shops, practices, and organizations. I take you off the template, put the site live, and stay until it works.",
   work: {
-    title: "Work",
+    title: "Projects",
     desc: "",
   },
   aboutSection: { title: "About" },
@@ -72,8 +73,8 @@ const timelineEntries = [
     category: "web",
     title: "Bread Breakers",
     organization: "Full-stack client build",
-    summary: "Public site, admin tools, and chapter launch flow for a community org.",
-    impact: "A product someone can run, with RSVPs, email, and chapter onboarding.",
+    summary: "Rebuilt site plus a staff dashboard for events, blog posts, and user access.",
+    impact: "The team runs events and the blog themselves, no code required.",
     projectIndex: 4,
   },
   {
@@ -87,7 +88,7 @@ const timelineEntries = [
     projectIndex: 3,
   },
   {
-    dateLabel: "2025 – 2026",
+    dateLabel: "2025-2026",
     sortDate: "2025-09-01",
     category: "pm",
     title: "E3 Sponsor Database",
@@ -117,7 +118,7 @@ const timelineEntries = [
     tools: ["Git", "GitHub", "Repo setup", "Documentation"],
   },
   {
-    dateLabel: "2020 – 2022",
+    dateLabel: "2020-2022",
     sortDate: "2020-03-01",
     category: "entrepreneurship",
     title: "Founded Visions Clothing",
@@ -168,7 +169,7 @@ const projects = [
     kicker: "Online shop",
     clientTeaser: "A clothing shop. Browse, check out, pay.",
     clientBlurb:
-      "My own clothing brand. A full storefront with checkout, payments, and order handling — live and selling.",
+      "A clothing brand's online store. Checkout, payments, and order handling, live and selling.",
     summary:
       "I'm the founder. I built the full-stack shop at visionsstudio.us, run the marketing, and process real orders.",
     detail:
@@ -203,9 +204,9 @@ const projects = [
     kicker: "Custom tool",
     clientTeaser: "Sponsor contacts and follow-ups, in one place.",
     clientBlurb:
-      "Empowerment3 serves families, veterans, and people with disabilities. Years of scattered sponsor records now live in one searchable place, with outreach emails ready to send.",
+      "A community empowerment center at JMU. Years of scattered sponsor records now live in one searchable place, with outreach emails ready to send.",
     summary:
-      "Sponsor CRM for Empowerment3, a community center for families, veterans, and people with disabilities.",
+      "Sponsor CRM for Empowerment3, a community empowerment center at JMU.",
     detail:
       "Empowerment3 had sponsor records spread across semesters with no single place to search or follow up. I was PM on a three-person team and built the app: <strong>Streamlit</strong> front end, <strong>SQLite</strong> backend, template-driven outreach emails.",
     Task: "Centralize sponsor records into one searchable database with outreach templates.",
@@ -228,9 +229,9 @@ const projects = [
     featuredOrder: 1,
     gridTags: ["ai"],
     kicker: "Custom site",
-    clientTeaser: "Answers student questions from the program’s own materials.",
+    clientTeaser: "Answers student questions from the program's own materials.",
     clientBlurb:
-      "Prospective students ask in plain English. The site answers from the program’s own handbooks, web pages, and advising documents — not guesswork.",
+      "Prospective students ask in plain English. The site answers from the program's own handbooks, web pages, and advising documents, not guesswork.",
     summary:
       "Multi-agent RAG chatbot with a Next.js frontend, LangGraph orchestration, and pgvector-backed retrieval.",
     detail:
@@ -283,18 +284,18 @@ const projects = [
     featuredOrder: 3,
     gridTags: ["websites"],
     kicker: "Organization website",
-    clientTeaser: "Events, sign-ups, and new groups — in one place.",
+    clientTeaser: "Events, sign-ups, and a team dashboard in one place.",
     clientBlurb:
-      "A community dinner organization. Public site, event sign-ups with confirmation emails, and a simple way for anyone to start a new chapter.",
+      "A community dinner group. I rebuilt their website and gave their team a private dashboard to post events, publish blog posts, and control who can log in.",
     summary:
-      "Full-stack platform for a community org: public site, internal tools, Postgres backend, and Postmark RSVP flow.",
+      "Next.js rebuild of a community dinner group's site, with a password-protected staff dashboard for events, blog posts, and user access.",
     detail:
-      "Bread Breakers needed more than a landing page. I rebuilt their site in <strong>Next.js</strong> with <strong>Prisma</strong> and <strong>PostgreSQL</strong> for event RSVPs, <strong>Postmark</strong> for confirmation emails, and an internal flow so someone can start and run their own Bread Breakers chapter. It's a product, not just marketing copy.",
+      "Bread Breakers needed a site their own team could keep up to date. I rebuilt it in <strong>Next.js</strong> and added a staff dashboard behind a login. Organizers create and edit events, upload event photos, and publish <strong>Substack</strong> posts to the blog, while an admin account controls who can sign in. Events live in <strong>PostgreSQL</strong> through <strong>Prisma</strong>, each one has an add-to-calendar link, and guests sign up right on the event page. The public site also covers donations, an FAQ, and a page for starting Bread Breakers in a new community.",
     Task:
-      "Turn a community organization into a deployable platform with public pages, admin tooling, and chapter onboarding.",
+      "Rebuild the public site and give the team a dashboard to run events, the blog, and user access on their own.",
     Impact:
-      "Gave them a real internal site and a repeatable way to launch new chapters, with RSVP data and email confirmations built in.",
-    tools: ["Next.js", "Prisma", "PostgreSQL", "Postmark", "Vercel", "TypeScript"],
+      "The team updates events and the blog without touching code, and new communities have a clear path to start their own dinners.",
+    tools: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Authentication", "Substack", "Vercel"],
     liveUrl: "https://breadbreakerscommunity.org/",
     githubUrl: "https://github.com/sophiafeld1/breadbreakers-site",
     image: "assets/bread-breakers-preview.png?v=2",

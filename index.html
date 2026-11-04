@@ -4,25 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Visions Creative LLC designs, builds, and launches websites for businesses.">
-  <title>Visions Creative LLC — Websites for businesses</title>
+  <title>Visions Creative LLC | Websites for businesses</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=67">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..650;1,400..650&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=71">
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav">
-      <div class="nav-brand">
-        <a href="#" class="nav-logo" data-name>Visions Creative LLC</a>
-      </div>
+    <nav class="nav wrap">
+      <a href="#" class="nav-logo">Visions Creative</a>
       <ul class="nav-links">
-        <li><a href="#work">Work</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="https://www.linkedin.com/in/sophia-feldman/" target="_blank" rel="noopener">LinkedIn</a></li>
       </ul>
-      <a class="nav-cta btn btn-primary" id="nav-book-chat" href="#" target="_blank" rel="noopener">Book a call</a>
+      <a class="btn btn-primary nav-cta" id="nav-book-chat" href="#" target="_blank" rel="noopener">Book a call</a>
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
         <span></span>
         <span></span>
@@ -32,43 +30,54 @@
 
   <main>
     <section class="hero" id="hero">
-      <h1 class="hero-title" id="hero-headline"></h1>
-      <div class="hero-copy">
-        <span class="hero-rule" aria-hidden="true"></span>
-        <p class="hero-subtitle"></p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" id="hero-book-chat" href="#" target="_blank" rel="noopener">Book a call</a>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker" id="hero-kicker">Design, engineering, and delivery</p>
+          <h1 class="hero-title" id="hero-headline"></h1>
+          <p class="hero-subtitle"></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" id="hero-book-chat" href="#" target="_blank" rel="noopener">Book a call</a>
+            <a class="btn btn-line" href="#projects">See projects</a>
+          </div>
+        </div>
+        <div class="hero-stack" aria-hidden="true">
+          <div class="hero-shot"><img src="assets/path-to-peace-preview.png" alt=""></div>
+          <div class="hero-shot"><img src="assets/visions-preview.png?v=3" alt=""></div>
         </div>
       </div>
     </section>
 
-    <section id="work" class="section section-work">
-      <h2 class="visually-hidden" id="work-title">Work</h2>
+    <section id="projects" class="section section-projects">
+      <h2 class="visually-hidden" id="work-title">Projects</h2>
       <p class="section-desc" id="work-desc"></p>
-      <div id="project-grid" class="project-grid"></div>
+      <div class="wrap">
+        <div id="project-grid" class="project-grid"></div>
+      </div>
     </section>
 
     <div id="work-detail-view" class="work-detail-view" hidden></div>
 
-    <section id="about" class="section section-alt">
-      <div class="about-inner">
-        <div class="about-layout">
-          <div class="about-carousel" id="about-carousel">
-            <div class="about-carousel-track" id="about-carousel-track"></div>
-            <nav class="about-carousel-dots" id="about-carousel-dots" aria-label="Studio photos"></nav>
-          </div>
-          <div class="about-content">
-            <h2 class="section-title" id="about-title">About</h2>
-            <p class="about-text"></p>
-          </div>
+    <section id="about" class="section section-about">
+      <div class="wrap about-grid">
+        <div class="about-carousel" id="about-carousel" data-reveal>
+          <div class="about-carousel-track" id="about-carousel-track"></div>
+          <nav class="about-carousel-dots" id="about-carousel-dots" aria-label="Studio photos"></nav>
+        </div>
+        <div class="about-content" data-reveal>
+          <h2 class="section-title" id="about-title">About</h2>
+          <p class="about-text"></p>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section section-alt">
-      <h2 class="section-title" id="contact-title">Contact</h2>
-      <p class="section-desc" id="contact-desc"></p>
-      <div class="contact-links" id="contact-links"></div>
+    <section id="contact" class="section section-contact">
+      <div class="wrap">
+        <div class="contact-box" data-reveal>
+          <h2 class="section-title" id="contact-title">Contact</h2>
+          <p class="section-desc" id="contact-desc"></p>
+          <div class="contact-links" id="contact-links"></div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -84,7 +93,7 @@
     <p>&copy; <span id="year"></span> <span data-name>Visions Creative LLC</span></p>
   </footer>
 
-  <script src="js/projects.js?v=49"></script>
-  <script src="js/main.js?v=62"></script>
+  <script src="js/projects.js?v=50"></script>
+  <script src="js/main.js?v=64"></script>
 </body>
 </html>

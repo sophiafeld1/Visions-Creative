@@ -7,11 +7,11 @@ function renderProjectMetaList(project) {
     <dl class="work-detail-meta-list">
       <div class="work-meta-field">
         <dt>Client</dt>
-        <dd>${project.client || project.context || "—"}</dd>
+        <dd>${project.client || project.context || ""}</dd>
       </div>
       <div class="work-meta-field">
         <dt>Year</dt>
-        <dd>${project.year || "—"}</dd>
+        <dd>${project.year || ""}</dd>
       </div>
       <div class="work-meta-field">
         <dt>Project type</dt>
@@ -223,7 +223,7 @@ function setupLivePreviewWrap(wrap) {
       const doc = iframe.contentDocument;
       if (doc && doc.body && doc.body.childElementCount === 0) showFallback();
     } catch {
-      /* cross-origin — keep iframe visible */
+      /* cross-origin: keep iframe visible */
     }
   });
 }
@@ -273,18 +273,20 @@ function renderProjectGridCard({ project, index }) {
   const label = `${kicker}: ${project.title}`;
 
   return `
-    <article class="spotlight-card" data-project-index="${index}">
-      ${image}
-      <button type="button" class="spotlight-toggle" aria-expanded="false" aria-label="${label}"></button>
-      <button type="button" class="spotlight-close" aria-label="Close">&times;</button>
+    <article class="spotlight-card" data-project-index="${index}" data-reveal>
       <div class="spotlight-head">
         <p class="spotlight-kicker">${kicker}</p>
         <h3 class="spotlight-blurb-title">${project.title}</h3>
       </div>
-      <div class="spotlight-sliding">
-        <p class="spotlight-teaser">${project.clientBlurb || project.clientTeaser || project.summary || ""}</p>
+      <div class="spotlight-media">
+        ${image}
+        <div class="spotlight-reveal">
+          <p class="spotlight-teaser">${project.clientBlurb || project.clientTeaser || project.summary || ""}</p>
+          ${visitLink}
+        </div>
       </div>
-      <div class="spotlight-cta">${visitLink}</div>
+      <button type="button" class="spotlight-toggle" aria-expanded="false" aria-label="${label}"></button>
+      <button type="button" class="spotlight-close" aria-label="Close">&times;</button>
     </article>
   `;
 }
@@ -405,11 +407,17 @@ function applySiteCopy() {
     status.innerHTML = `<span class="hero-status-dot" aria-hidden="true"></span>${siteConfig.status}`;
   }
 
+  const kicker = document.getElementById("hero-kicker");
+  if (kicker && siteConfig.kicker) kicker.textContent = siteConfig.kicker;
+
   const headline = document.getElementById("hero-headline");
   if (headline && siteConfig.headlineLines?.length) {
     headline.innerHTML = siteConfig.headlineLines
-      .map((line, i) => `<span class="hero-title-line hero-title-line--${i % 2 ? "right" : "left"}">${line}</span>`)
-      .join(" ");
+      .map((line, i) => {
+        const marked = i === 1 ? line.replace(/\bwork\./i, "<em>work.</em>") : line;
+        return `<span class="h-line"><span>${marked}</span></span>`;
+      })
+      .join("");
   } else if (headline && siteConfig.headline) {
     headline.textContent = siteConfig.headline;
   }
@@ -453,7 +461,7 @@ function openProject(index, options = {}) {
   if (!project || !detailView) return;
 
   if (!options.skipHistory) {
-    returnHash = currentHash() || "work";
+    returnHash = currentHash() || "projects";
   }
 
   activeProjectIndex = index;
@@ -483,7 +491,7 @@ function closeProject(options = {}) {
   detailView.innerHTML = "";
   document.body.classList.remove("work-showing-detail");
 
-  const hash = returnHash || "work";
+  const hash = returnHash || "projects";
   if (!options.skipHistory) {
     window.history.pushState(null, "", `#${hash}`);
   }
@@ -762,37 +770,52 @@ function setupNav() {
 
 function setupHeroDrift() {
   const hero = document.getElementById("hero");
-  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const shots = [...document.querySelectorAll(".hero-shot")];
+  if (!hero || !shots.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const left = hero.querySelector(".hero-title-line--left");
-  const right = hero.querySelector(".hero-title-line--right");
-  const title = hero.querySelector(".hero-title");
-  const copy = hero.querySelector(".hero-copy");
   let frame = 0;
-  let heroVisible = true;
-
-  // Uses the `translate` property so it composes with the CSS entrance keyframes on `transform`.
+  let visible = true;
   const apply = () => {
     frame = 0;
-    const y = Math.min(window.scrollY, hero.offsetTop + hero.offsetHeight);
-    if (title) title.style.translate = `0 ${(y * 0.12).toFixed(2)}px`;
-    if (left) left.style.translate = `${(-y * 0.06).toFixed(2)}px 0`;
-    if (right) right.style.translate = `${(y * 0.06).toFixed(2)}px 0`;
-    if (copy) copy.style.translate = `0 ${(y * 0.06).toFixed(2)}px`;
-  };
-
-  const onScroll = () => {
-    if (!heroVisible || frame) return;
-    frame = requestAnimationFrame(apply);
+    if (!visible) return;
+    const y = Math.min(window.scrollY, hero.offsetHeight);
+    shots[0].style.translate = `0 ${(y * -0.08).toFixed(2)}px`;
+    if (shots[1]) shots[1].style.translate = `0 ${(y * -0.04).toFixed(2)}px`;
   };
 
   new IntersectionObserver(([entry]) => {
-    heroVisible = entry.isIntersecting;
-    if (heroVisible) onScroll();
+    visible = entry.isIntersecting;
   }).observe(hero);
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  apply();
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!frame) frame = requestAnimationFrame(apply);
+    },
+    { passive: true }
+  );
+}
+
+function setupScrollReveal() {
+  const nodes = document.querySelectorAll("[data-reveal]");
+  if (!nodes.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    nodes.forEach((el) => el.classList.add("in"));
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  nodes.forEach((el) => io.observe(el));
 }
 
 function setupActiveNav() {
@@ -862,3 +885,4 @@ setupContact();
 setupNav();
 setupActiveNav();
 setupHeroDrift();
+setupScrollReveal();
