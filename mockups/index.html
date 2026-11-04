@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visions Creative | Style options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..600&family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Instrument+Sans:wght@400..650&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --r: 16px;
+      --max: 1180px;
+    }
+
+    body[data-theme="harbor"] {
+      --bg: #f4efe6;
+      --surface: #fffdf8;
+      --ink: #1b2433;
+      --muted: rgba(27, 36, 51, 0.62);
+      --line: rgba(27, 36, 51, 0.12);
+      --accent: #9a4a2a;
+      --accent-ink: #fffdf8;
+      --panel: #1b2433;
+      --panel-ink: #f4efe6;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "DM Sans", system-ui, sans-serif;
+      --display-weight: 560;
+      --display-track: -0.028em;
+    }
+
+    body[data-theme="atlas"] {
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --ink: #12161d;
+      --muted: rgba(18, 22, 29, 0.6);
+      --line: rgba(18, 22, 29, 0.1);
+      --accent: #1f4e8c;
+      --accent-ink: #ffffff;
+      --panel: #12161d;
+      --panel-ink: #f3f5f8;
+      --font-display: "Instrument Sans", system-ui, sans-serif;
+      --font-body: "Instrument Sans", system-ui, sans-serif;
+      --display-weight: 575;
+      --display-track: -0.032em;
+    }
+
+    body[data-theme="ledger"] {
+      --bg: #f7f4ef;
+      --surface: #fffcf7;
+      --ink: #1c211c;
+      --muted: rgba(28, 33, 28, 0.62);
+      --line: rgba(28, 33, 28, 0.12);
+      --accent: #3f5d4a;
+      --accent-ink: #f7f4ef;
+      --panel: #1c211c;
+      --panel-ink: #f7f4ef;
+      --font-display: "Newsreader", Georgia, serif;
+      --font-body: "DM Sans", system-ui, sans-serif;
+      --display-weight: 500;
+      --display-track: -0.02em;
+    }
+
+    html, body { overflow-x: clip; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      transition: background-color 0.45s var(--ease), color 0.45s var(--ease);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap { display: flex; align-items: center; height: 72px; gap: 2rem; }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: var(--display-weight);
+      letter-spacing: -0.02em;
+      font-size: 1.15rem;
+    }
+    .nav-links { display: flex; gap: 1.75rem; margin-left: auto; list-style: none; }
+    .nav-links a {
+      position: relative;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute; left: 0; bottom: -6px;
+      width: 0; height: 1px; background: var(--ink);
+      transition: width 0.55s var(--ease);
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.8rem 1.25rem;
+      border-radius: 10px;
+      font: 550 0.95rem/1 var(--font-body);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.45s var(--ease), background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-p { background: var(--ink); color: var(--bg); }
+    .btn-p:hover { background: var(--accent); color: var(--accent-ink); }
+    .btn-line { border-color: var(--line); background: var(--surface); }
+    .btn-line:hover { border-color: var(--ink); }
+    .btn-on-dark { background: var(--panel-ink); color: var(--panel); }
+    .btn-ghost-on-dark { border-color: color-mix(in srgb, var(--panel-ink) 28%, transparent); color: var(--panel-ink); }
+
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 4rem;
+      align-items: end;
+      padding: 5.5rem 0 5rem;
+    }
+    .kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      animation: fade-up 0.9s var(--ease) 0.05s backwards;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: var(--display-weight);
+      letter-spacing: var(--display-track);
+      font-size: clamp(3.4rem, 6.6vw, 6.2rem);
+      line-height: 0.96;
+    }
+    .h-line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+    .h-line > span {
+      display: block;
+      animation: line-up 1s var(--ease) backwards;
+    }
+    .h-line:nth-child(2) > span { animation-delay: 0.12s; }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: inherit;
+      color: var(--accent);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0.08em;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: rule-grow 0.7s var(--ease) 0.85s backwards;
+    }
+    .hero .sub {
+      margin-top: 1.6rem;
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 28ch;
+      animation: fade-up 0.9s var(--ease) 0.4s backwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem;
+      animation: fade-up 0.9s var(--ease) 0.55s backwards;
+    }
+
+    .stack { position: relative; min-height: 420px; }
+    .shot {
+      position: absolute;
+      width: 72%;
+      aspect-ratio: 16 / 11;
+      border-radius: var(--r);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 18px 50px -24px rgba(18, 22, 29, 0.35);
+      border: 1px solid var(--line);
+      will-change: transform;
+    }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .shot:nth-child(1) {
+      top: 0; right: 0;
+      animation: shot-in 1.05s var(--ease) 0.28s backwards, float-a 8.5s 1.4s ease-in-out infinite;
+    }
+    .shot:nth-child(2) {
+      left: 0; bottom: 0; width: 64%;
+      animation: shot-in 1.05s var(--ease) 0.46s backwards, float-b 9.5s 1.8s ease-in-out infinite;
+    }
+
+    @keyframes line-up { from { transform: translateY(108%); } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(18px); } }
+    @keyframes rule-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes shot-in { from { opacity: 0; transform: translateY(48px); } }
+    @keyframes float-a { 50% { translate: 0 -12px; } }
+    @keyframes float-b { 50% { translate: 0 10px; } }
+
+    .projects { padding: 2rem 0 7rem; }
+    .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.25rem; }
+    .card { grid-column: span 2; }
+    .card:nth-child(-n + 2) { grid-column: span 3; }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.55s var(--ease), box-shadow 0.55s var(--ease);
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 22px 40px -28px rgba(18, 22, 29, 0.4); }
+    .card-head { padding: 1.35rem 1.4rem 1.1rem; }
+    .pill {
+      display: inline-block;
+      margin-bottom: 0.55rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .card h3 {
+      font-family: var(--font-display);
+      font-weight: var(--display-weight);
+      letter-spacing: -0.02em;
+      font-size: clamp(1.35rem, 1.9vw, 1.75rem);
+      line-height: 1.15;
+    }
+    .media { position: relative; min-height: 220px; background: #ddd; }
+    .card:nth-child(-n + 2) .media { min-height: 290px; }
+    .media img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      transition: filter 0.55s var(--ease), transform 0.7s var(--ease);
+    }
+    .card:hover .media img { filter: blur(8px) brightness(0.45); transform: scale(1.04); }
+    .reveal {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      gap: 0.9rem; padding: 1.4rem;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s var(--ease), transform 0.55s var(--ease);
+    }
+    .card:hover .reveal { opacity: 1; transform: none; }
+    .reveal p { font-size: 0.98rem; line-height: 1.45; font-weight: 500; }
+    .visit {
+      position: relative;
+      align-self: flex-start;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding-bottom: 3px;
+    }
+    .visit::after {
+      content: "";
+      position: absolute; left: 0; bottom: 0;
+      width: 0; height: 1px; background: #fff;
+      transition: width 0.55s var(--ease);
+    }
+    .card:hover .visit::after { width: 100%; }
+
+    .about .wrap {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 5rem;
+      align-items: center;
+      padding: 2rem 0 7rem;
+    }
+    .about-photo img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: var(--r);
+    }
+    .about h2, .contact h2 {
+      font-family: var(--font-display);
+      font-weight: var(--display-weight);
+      letter-spacing: var(--display-track);
+      font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+      line-height: 1.05;
+      margin-bottom: 1.1rem;
+    }
+    .about p { font-size: 1.2rem; color: var(--muted); max-width: 34ch; }
+
+    .contact { padding-bottom: 3rem; }
+    .contact-box {
+      background: var(--panel);
+      color: var(--panel-ink);
+      border-radius: 20px;
+      padding: clamp(2.25rem, 5vw, 4rem);
+    }
+    .contact-box p { color: color-mix(in srgb, var(--panel-ink) 70%, transparent); max-width: 36ch; }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+    footer { text-align: center; padding: 2.5rem 0 7rem; color: var(--muted); font-size: 0.88rem; }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s var(--ease), transform 0.95s var(--ease);
+      transition-delay: var(--d, 0s);
+    }
+    [data-reveal].in { opacity: 1; transform: none; }
+    .card:nth-child(2) { --d: 0.08s; }
+    .card:nth-child(3) { --d: 0.04s; }
+    .card:nth-child(4) { --d: 0.12s; }
+    .card:nth-child(5) { --d: 0.2s; }
+
+    .switcher {
+      position: fixed; left: 50%; bottom: 1.15rem; z-index: 50; translate: -50% 0;
+      display: flex; gap: 0.3rem; padding: 0.35rem;
+      border-radius: 999px;
+      background: #141414;
+      box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+    }
+    .switcher button {
+      display: flex; align-items: center; gap: 0.5rem;
+      border: 0; cursor: pointer;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      background: transparent;
+      color: #efe8df;
+      font: 550 0.86rem var(--font-body);
+    }
+    .switcher button[aria-pressed="true"] { background: #2c2c2c; }
+    .swatch { display: flex; }
+    .swatch i { width: 12px; height: 12px; border-radius: 50%; margin-left: -3px; border: 2px solid #141414; }
+
+    @media (max-width: 900px) {
+      .hero .wrap, .about .wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .stack { min-height: 280px; }
+      .grid { grid-template-columns: 1fr; }
+      .card, .card:nth-child(-n + 2) { grid-column: auto; }
+      .nav-links { display: none; }
+      .nav .btn { margin-left: auto; }
+      .switcher button span.label { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+      .shot { animation: none !important; }
+    }
+  </style>
+</head>
+<body data-theme="atlas">
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#">Visions Creative</a>
+      <ul class="nav-links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://www.linkedin.com/in/sophia-feldman/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+      <a class="btn btn-p" href="#contact">Book a call</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Design, engineering, and delivery</p>
+        <h1>
+          <span class="h-line"><span>Websites</span></span>
+          <span class="h-line"><span>that <em>work.</em></span></span>
+        </h1>
+        <p class="sub">I design, build, and launch.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-p" href="#contact">Book a call</a>
+          <a class="btn btn-line" href="#projects">See projects</a>
+        </div>
+      </div>
+      <div class="stack" aria-hidden="true">
+        <div class="shot"><img src="../assets/path-to-peace-preview.png" alt=""></div>
+        <div class="shot"><img src="../assets/visions-preview.png?v=3" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="wrap">
+      <div class="grid">
+        <article class="card" data-reveal>
+          <div class="card-head"><span class="pill">Custom site</span><h3>ISAT Advising Agent</h3></div>
+          <div class="media">
+            <img src="../assets/isat-recruiter-preview.png?v=2" alt="">
+            <div class="reveal">
+              <p>Prospective students ask in plain English. The site answers from the program's own handbooks, web pages, and advising documents, not guesswork.</p>
+              <a class="visit" href="https://isat-recruiter-2w1a.vercel.app/" target="_blank" rel="noopener">Visit the live site</a>
+            </div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-head"><span class="pill">Website</span><h3>Path to Peace Psychotherapy</h3></div>
+          <div class="media">
+            <img src="../assets/path-to-peace-preview.png" alt="">
+            <div class="reveal">
+              <p>A trauma therapy practice in Reston, VA. I moved them off Squarespace, cut the monthly bill, and built a contact form that actually reaches the office.</p>
+              <a class="visit" href="https://path2-peace.vercel.app/" target="_blank" rel="noopener">Visit the live site</a>
+            </div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-head"><span class="pill">Organization website</span><h3>Bread Breakers</h3></div>
+          <div class="media">
+            <img src="../assets/bread-breakers-preview.png?v=2" alt="">
+            <div class="reveal">
+              <p>A community dinner group. I rebuilt their website and gave their team a private dashboard to post events, publish blog posts, and control who can log in.</p>
+              <a class="visit" href="https://breadbreakerscommunity.org/" target="_blank" rel="noopener">Visit the live site</a>
+            </div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-head"><span class="pill">Custom tool</span><h3>E3 Sponsor Database</h3></div>
+          <div class="media">
+            <img src="../assets/e3-sponsor-database.png" alt="">
+            <div class="reveal">
+              <p>A community empowerment center at JMU. Years of scattered sponsor records now live in one searchable place, with outreach emails ready to send.</p>
+              <a class="visit" href="https://sophiafeld1-empowerment3-app-bbtrse.streamlit.app/" target="_blank" rel="noopener">Visit the live site</a>
+            </div>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card-head"><span class="pill">Online shop</span><h3>Visions Studio</h3></div>
+          <div class="media">
+            <img src="../assets/visions-preview.png?v=3" alt="">
+            <div class="reveal">
+              <p>A clothing brand's online store. Checkout, payments, and order handling, live and selling.</p>
+              <a class="visit" href="https://visionsstudio.us/" target="_blank" rel="noopener">Visit the live site</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-photo" data-reveal>
+        <img src="../assets/about_imgs/IMG_3429.jpeg" alt="At work in the studio">
+      </div>
+      <div data-reveal>
+        <h2>About</h2>
+        <p>I build websites for shops, practices, and organizations. I take you off the template, put the site live, and stay until it works.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-box" data-reveal>
+        <h2>Contact</h2>
+        <div class="contact-actions">
+          <a class="btn btn-on-dark" href="#">Book a call</a>
+          <a class="btn btn-ghost-on-dark" href="mailto:sophia.fay.f@gmail.com">sophia.fay.f@gmail.com</a>
+          <a class="btn btn-ghost-on-dark" href="https://www.linkedin.com/in/sophia-feldman/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 Visions Creative LLC</footer>
+
+  <nav class="switcher" aria-label="Style options">
+    <button type="button" data-set="harbor"><span class="swatch"><i style="background:#f4efe6"></i><i style="background:#1b2433"></i><i style="background:#9a4a2a"></i></span><span class="label">A · Harbor</span></button>
+    <button type="button" data-set="atlas"><span class="swatch"><i style="background:#f3f5f8"></i><i style="background:#12161d"></i><i style="background:#1f4e8c"></i></span><span class="label">B · Atlas</span></button>
+    <button type="button" data-set="ledger"><span class="swatch"><i style="background:#f7f4ef"></i><i style="background:#1c211c"></i><i style="background:#3f5d4a"></i></span><span class="label">C · Ledger</span></button>
+  </nav>
+
+  <script>
+    const buttons = document.querySelectorAll(".switcher button");
+    function setTheme(name) {
+      document.body.dataset.theme = name;
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.set === name)));
+      history.replaceState(null, "", `#${name}`);
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => setTheme(b.dataset.set)));
+    setTheme(["harbor", "atlas", "ledger"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "atlas");
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+
+    const shots = [...document.querySelectorAll(".shot")];
+    const motionOk = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (motionOk && shots.length) {
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const y = Math.min(scrollY, innerHeight);
+        shots[0].style.translate = `0 ${y * -0.08}px`;
+        if (shots[1]) shots[1].style.translate = `0 ${y * -0.04}px`;
+      };
+      addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>

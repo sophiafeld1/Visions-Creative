@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion mockups | Visions Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..650;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f3f5f8;
+      --ink: #12161d;
+      --muted: rgba(18, 22, 29, 0.58);
+      --line: rgba(18, 22, 29, 0.1);
+      --accent: #1f4e8c;
+      --surface: #fff;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html, body { overflow-x: clip; }
+    body {
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    .bar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+      padding: 0.85rem 1.25rem;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar strong { margin-right: auto; font-weight: 575; letter-spacing: -0.02em; }
+    .bar button {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font: 550 0.85rem "Instrument Sans", system-ui, sans-serif;
+      cursor: pointer;
+    }
+    .bar button[aria-pressed="true"] {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .note {
+      max-width: 720px;
+      margin: 1.25rem auto 0;
+      padding: 0 1.25rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .stage {
+      position: relative;
+      max-width: 1180px;
+      margin: 1.25rem auto 5rem;
+      min-height: 640px;
+      padding: 2.5rem 1.5rem 3.5rem;
+      overflow: clip;
+    }
+    .copy { max-width: 34rem; position: relative; z-index: 2; }
+    .kicker {
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600; color: var(--muted); margin-bottom: 1.1rem;
+    }
+    h1 {
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      font-weight: 575; letter-spacing: -0.032em; line-height: 0.96;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+    .sub { margin-top: 1.2rem; font-size: 1.15rem; color: var(--muted); }
+
+    /* Shared fake UI */
+    .ui {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px -28px rgba(18, 22, 29, 0.45);
+      overflow: hidden;
+    }
+    .chrome {
+      display: flex; gap: 6px; align-items: center;
+      height: 34px; padding: 0 12px;
+      background: #eef1f5; border-bottom: 1px solid var(--line);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #c9d0da; }
+    .addr { height: 8px; width: 42%; border-radius: 99px; background: #dbe1e8; margin-left: 8px; }
+    .navrow { display: flex; gap: 10px; padding: 12px 14px; }
+    .pill { height: 8px; border-radius: 99px; background: #d5dbe3; }
+    .heroimg {
+      margin: 0 14px 14px; height: 92px; border-radius: 10px;
+      background: linear-gradient(135deg, #1f4e8c, #9bb6d6);
+    }
+    .btnfake { height: 22px; width: 72px; border-radius: 8px; background: var(--ink); }
+    .cardmini { width: 92px; height: 110px; border-radius: 12px; background: #fff; border: 1px solid var(--line); }
+    .cardmini span { display: block; height: 54px; background: #dfe5ec; }
+    .cardmini i { display: block; height: 6px; margin: 10px 8px 0; border-radius: 99px; background: #cfd6de; }
+
+    /* A: Assemble */
+    [data-scene="assemble"] .piece { position: absolute; animation: assemble 6.5s var(--ease) infinite; }
+    [data-scene="assemble"] .p1 { right: 5%; top: 88px; width: 340px; height: 250px; animation-delay: 0s; }
+    [data-scene="assemble"] .p2 { right: 30%; top: 250px; width: 210px; height: 150px; animation-delay: 0.18s; }
+    [data-scene="assemble"] .p3 { right: 6%; top: 470px; animation: orbit-card 6.5s var(--ease) infinite; }
+    [data-scene="assemble"] .p4 { right: 16%; top: 470px; animation: orbit-card 6.5s 0.12s var(--ease) infinite; }
+    [data-scene="assemble"] .p5 { right: 26%; top: 470px; animation: orbit-card 6.5s 0.24s var(--ease) infinite; }
+    @keyframes assemble {
+      0% { opacity: 0; transform: translate(48px, 36px) rotate(4deg) scale(0.92); }
+      18%, 72% { opacity: 1; transform: none; }
+      88%, 100% { opacity: 0; transform: translate(-24px, -18px) rotate(-3deg) scale(0.96); }
+    }
+    @keyframes orbit-card {
+      0% { opacity: 0; transform: translateY(28px) scale(0.9); }
+      22%, 70% { opacity: 1; transform: none; }
+      86%, 100% { opacity: 0; transform: translateY(-16px) scale(0.94); }
+    }
+
+    /* B: Drift field */
+    [data-scene="drift"] .field { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    [data-scene="drift"] .floater {
+      position: absolute; opacity: 0.55;
+      animation: drift 18s linear infinite;
+    }
+    [data-scene="drift"] .f1 { left: 46%; top: 8%; width: 260px; animation-duration: 22s; }
+    [data-scene="drift"] .f2 { right: 4%; top: 18%; width: 180px; animation-duration: 16s; animation-direction: reverse; }
+    [data-scene="drift"] .f3 { right: 18%; bottom: 12%; animation-duration: 20s; }
+    [data-scene="drift"] .f4 { left: 52%; bottom: 8%; animation-duration: 24s; animation-direction: reverse; }
+    [data-scene="drift"] .f5 { right: 38%; top: 42%; width: 140px; opacity: 0.35; animation-duration: 14s; }
+    @keyframes drift {
+      0% { transform: translate(0, 0) rotate(-6deg); }
+      50% { transform: translate(18px, -22px) rotate(4deg); }
+      100% { transform: translate(0, 0) rotate(-6deg); }
+    }
+
+    /* C: Layout swap */
+    [data-scene="swap"] .browser {
+      right: 5%; top: 56px; width: min(420px, 46vw); height: 430px;
+    }
+    [data-scene="swap"] .slot {
+      position: absolute; transition: transform 1.1s var(--ease), width 1.1s var(--ease), height 1.1s var(--ease);
+    }
+    [data-scene="swap"] .s-nav { left: 16px; top: 46px; width: calc(100% - 32px); height: 36px; }
+    [data-scene="swap"] .s-hero { left: 16px; top: 96px; width: calc(100% - 32px); height: 150px; }
+    [data-scene="swap"] .s-a { left: 16px; top: 262px; width: 48%; height: 120px; }
+    [data-scene="swap"] .s-b { right: 16px; top: 262px; width: 42%; height: 120px; }
+    [data-scene="swap"][data-alt="1"] .s-nav { transform: translateY(250px); }
+    [data-scene="swap"][data-alt="1"] .s-hero { width: 46%; height: 280px; }
+    [data-scene="swap"][data-alt="1"] .s-a { transform: translate(118%, -166px); width: 42%; height: 130px; }
+    [data-scene="swap"][data-alt="1"] .s-b { transform: translate(0, 8px); width: 42%; height: 130px; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 860px) {
+      .stage { min-height: 980px; }
+      [data-scene="assemble"] .p1,
+      [data-scene="assemble"] .p2,
+      [data-scene="swap"] .browser { position: relative; right: auto; top: auto; width: 100%; margin-top: 2rem; }
+      [data-scene="assemble"] .p3, [data-scene="assemble"] .p4, [data-scene="assemble"] .p5 { position: relative; right: auto; display: inline-block; margin: 0.5rem 0.4rem 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Motion options</strong>
+    <button type="button" data-scene="assemble" aria-pressed="true">A · Assemble</button>
+    <button type="button" data-scene="drift">B · Drift field</button>
+    <button type="button" data-scene="swap">C · Layout swap</button>
+  </div>
+  <p class="note" id="note"></p>
+  <section class="stage" id="stage" data-scene="assemble">
+    <div class="copy">
+      <p class="kicker">Design, engineering, and delivery</p>
+      <h1>Websites<br>that <em>work.</em></h1>
+      <p class="sub">I design, build, and launch.</p>
+    </div>
+
+    <div class="ui piece p1">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"></span></div>
+      <div class="navrow"><span class="pill" style="width:48px"></span><span class="pill" style="width:36px"></span><span class="pill" style="width:40px"></span></div>
+      <div class="heroimg"></div>
+    </div>
+    <div class="ui piece p2">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="navrow"><div class="btnfake"></div></div>
+      <div class="heroimg" style="height:70px;background:linear-gradient(135deg,#12161d,#4d6f99)"></div>
+    </div>
+    <div class="cardmini piece p3"><span></span><i></i><i style="width:58%"></i></div>
+    <div class="cardmini piece p4"><span style="background:#c5d3e6"></span><i></i><i style="width:46%"></i></div>
+    <div class="cardmini piece p5"><span style="background:#b7c2d0"></span><i></i><i style="width:70%"></i></div>
+
+    <div class="field hidden" id="field">
+      <div class="ui floater f1">
+        <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"></span></div>
+        <div class="heroimg"></div>
+      </div>
+      <div class="ui floater f2">
+        <div class="navrow"><span class="pill" style="width:70px"></span><span class="pill" style="width:40px"></span></div>
+        <div class="heroimg" style="height:64px"></div>
+      </div>
+      <div class="cardmini floater f3"><span></span><i></i></div>
+      <div class="cardmini floater f4"><span style="background:#c9d6e8"></span><i></i></div>
+      <div class="ui floater f5" style="height:90px">
+        <div class="navrow"><div class="btnfake"></div></div>
+      </div>
+    </div>
+
+    <div class="ui browser hidden" id="browser">
+      <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="addr"></span></div>
+      <div class="slot s-nav ui" style="position:absolute"><div class="navrow"><span class="pill" style="width:52px"></span><span class="pill" style="width:40px"></span><span class="pill" style="width:46px"></span></div></div>
+      <div class="slot s-hero heroimg"></div>
+      <div class="slot s-a ui" style="position:absolute"><div class="heroimg" style="margin:10px;height:70px"></div></div>
+      <div class="slot s-b ui" style="position:absolute"><div class="heroimg" style="margin:10px;height:70px;background:linear-gradient(135deg,#12161d,#5a7eab)"></div></div>
+    </div>
+  </section>
+  <script>
+    const notes = {
+      assemble: "A browser window, a form, and three cards fly into place, hold, then leave. This is the Mellow-style product demo: you watch a site get built. Fills the empty right side of the hero.",
+      drift: "Faint UI pieces keep moving in the background so the page never feels empty. Quiet, like a consulting site with a living system behind the type.",
+      swap: "Inside one browser frame, nav, image, and cards rearrange from a stacked homepage to a split layout. Shows that you design structure, not just pages."
+    };
+    const stage = document.getElementById("stage");
+    const note = document.getElementById("note");
+    const field = document.getElementById("field");
+    const browser = document.getElementById("browser");
+    const pieces = [...document.querySelectorAll(".piece")];
+    const buttons = [...document.querySelectorAll(".bar button")];
+    let swapTimer;
+
+    function setScene(name) {
+      stage.dataset.scene = name;
+      stage.dataset.alt = "0";
+      note.textContent = notes[name];
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.scene === name)));
+      const isAssemble = name === "assemble";
+      const isDrift = name === "drift";
+      const isSwap = name === "swap";
+      pieces.forEach((el) => el.classList.toggle("hidden", !isAssemble));
+      field.classList.toggle("hidden", !isDrift);
+      browser.classList.toggle("hidden", !isSwap);
+      clearInterval(swapTimer);
+      if (isSwap) {
+        swapTimer = setInterval(() => {
+          stage.dataset.alt = stage.dataset.alt === "1" ? "0" : "1";
+        }, 2200);
+      }
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => setScene(b.dataset.scene)));
+    setScene("assemble");
+  </script>
+</body>
+</html>

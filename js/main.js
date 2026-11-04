@@ -415,7 +415,8 @@ function applySiteCopy() {
     headline.innerHTML = siteConfig.headlineLines
       .map((line, i) => {
         const marked = i === 1 ? line.replace(/\bwork\./i, "<em>work.</em>") : line;
-        return `<span class="h-line"><span>${marked}</span></span>`;
+        const side = i % 2 ? "right" : "left";
+        return `<span class="hero-title-line hero-title-line--${side}">${marked}</span>`;
       })
       .join("");
   } else if (headline && siteConfig.headline) {
@@ -768,10 +769,20 @@ function setupNav() {
   });
 }
 
+function setupLayoutSwap() {
+  const browser = document.getElementById("layout-browser");
+  if (!browser || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  window.setInterval(() => {
+    if (browser.dataset.pauseSwap === "true") return;
+    browser.classList.toggle("is-alt");
+  }, 2200);
+}
+
 function setupHeroDrift() {
   const hero = document.getElementById("hero");
-  const shots = [...document.querySelectorAll(".hero-shot")];
-  if (!hero || !shots.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const stage = hero?.querySelector(".hero-stage");
+  if (!hero || !stage || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   let frame = 0;
   let visible = true;
@@ -779,8 +790,7 @@ function setupHeroDrift() {
     frame = 0;
     if (!visible) return;
     const y = Math.min(window.scrollY, hero.offsetHeight);
-    shots[0].style.translate = `0 ${(y * -0.08).toFixed(2)}px`;
-    if (shots[1]) shots[1].style.translate = `0 ${(y * -0.04).toFixed(2)}px`;
+    stage.style.translate = `0 ${(y * -0.06).toFixed(2)}px`;
   };
 
   new IntersectionObserver(([entry]) => {
@@ -885,4 +895,5 @@ setupContact();
 setupNav();
 setupActiveNav();
 setupHeroDrift();
+setupLayoutSwap();
 setupScrollReveal();
