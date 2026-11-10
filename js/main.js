@@ -426,19 +426,11 @@ function applySiteCopy() {
   const tagline = document.querySelector(".hero-subtitle");
   if (tagline && siteConfig.tagline) tagline.textContent = siteConfig.tagline;
 
-  const about = document.querySelector(".about-text");
-  if (about && siteConfig.about) about.textContent = siteConfig.about;
-
   if (siteConfig.work) {
     const title = document.getElementById("work-title");
     const desc = document.getElementById("work-desc");
     if (title && siteConfig.work.title) title.textContent = siteConfig.work.title;
     if (desc && siteConfig.work.desc) desc.textContent = siteConfig.work.desc;
-  }
-
-  if (siteConfig.aboutSection?.title) {
-    const aboutTitle = document.getElementById("about-title");
-    if (aboutTitle) aboutTitle.textContent = siteConfig.aboutSection.title;
   }
 
   if (siteConfig.contact) {
@@ -561,57 +553,6 @@ function setupPreviewModal() {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !modal.hidden) closePreviewModal();
   });
-}
-
-function setupAboutCarousel() {
-  const images = siteConfig.aboutImages?.length
-    ? siteConfig.aboutImages
-    : [siteConfig.headshot].filter(Boolean);
-  const track = document.getElementById("about-carousel-track");
-  const dotsNav = document.getElementById("about-carousel-dots");
-  if (!track || !dotsNav || !images.length) return;
-
-  track.innerHTML = images
-    .map(
-      (src, index) =>
-        `<img class="about-carousel-image${index === 0 ? " is-active" : ""}" src="${src}" alt="${siteConfig.name} photo ${index + 1}" data-index="${index}">`
-    )
-    .join("");
-
-  dotsNav.innerHTML = images
-    .map(
-      (_, index) =>
-        `<button type="button" class="about-carousel-dot${index === 0 ? " is-active" : ""}" data-index="${index}" aria-label="Show photo ${index + 1}"></button>`
-    )
-    .join("");
-
-  let current = 0;
-  let timer = null;
-
-  function goTo(index) {
-    current = (index + images.length) % images.length;
-    track.querySelectorAll(".about-carousel-image").forEach((img, i) => {
-      img.classList.toggle("is-active", i === current);
-    });
-    dotsNav.querySelectorAll(".about-carousel-dot").forEach((dot, i) => {
-      dot.classList.toggle("is-active", i === current);
-    });
-  }
-
-  function startTimer() {
-    if (timer) clearInterval(timer);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    timer = window.setInterval(() => goTo(current + 1), 4000);
-  }
-
-  dotsNav.querySelectorAll(".about-carousel-dot").forEach((dot) => {
-    dot.addEventListener("click", () => {
-      goTo(Number(dot.dataset.index));
-      startTimer();
-    });
-  });
-
-  startTimer();
 }
 
 function setupProjectRouting() {
@@ -880,7 +821,6 @@ function renderSiteConfig() {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 renderSiteConfig();
-setupAboutCarousel();
 renderProjectGrid();
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;

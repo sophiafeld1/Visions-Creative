@@ -241,19 +241,6 @@ img {
   font-style: italic;
   font-weight: inherit;
   color: var(--accent);
-  position: relative;
-}
-
-.hero-title em::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.08em;
-  height: 3px;
-  background: var(--accent);
-  transform-origin: left center;
-  animation: hero-rule-grow 750ms var(--hero-ease) calc(var(--hero-delay-2) + 400ms) backwards;
 }
 
 .hero-subtitle {
@@ -537,11 +524,6 @@ img {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes hero-rule-grow {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
 @keyframes jump-a {
   0%, 100% { transform: translate(0, 0); }
   35% { transform: translate(14px, -26px); }
@@ -757,75 +739,12 @@ img {
   }
 }
 
-.section-about {
-  padding: 2rem 0 7rem;
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 5rem;
-  align-items: center;
-}
-
-.about-carousel {
-  position: relative;
-}
-
-.about-carousel-track {
-  position: relative;
-  border-radius: var(--r);
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  background: var(--surface);
-}
-
-.about-carousel-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.6s var(--ease);
-}
-
-.about-carousel-image.is-active {
-  opacity: 1;
-}
-
-.about-carousel-dots {
-  display: flex;
-  gap: 0.45rem;
-  justify-content: center;
-  margin-top: 0.9rem;
-}
-
-.about-carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 0;
-  background: var(--line);
-  cursor: pointer;
-}
-
-.about-carousel-dot.is-active {
-  background: var(--ink);
-}
-
 .section-title {
   font-weight: 575;
   letter-spacing: -0.032em;
   font-size: clamp(2.4rem, 4.4vw, 3.8rem);
   line-height: 1.05;
   margin-bottom: 1.1rem;
-}
-
-.about-text {
-  font-size: 1.2rem;
-  color: var(--muted);
-  max-width: 34ch;
 }
 
 .section-contact {
@@ -1001,8 +920,7 @@ body.modal-open {
 }
 
 @media (max-width: 900px) {
-  .hero-grid,
-  .about-grid {
+  .hero-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }

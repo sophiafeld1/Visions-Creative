@@ -5,11 +5,6 @@ const siteConfig = {
   email: "sophia.fay.f@gmail.com",
   calendarBookingUrl:
     "https://calendar.google.com/calendar/u/0/r/eventedit?text=Project+call+with+Visions+Creative+LLC&add=sophia.fay.f@gmail.com&details=A+short+intro+call+about+a+new+website.+Email:+sophia.fay.f@gmail.com",
-  aboutImages: [
-    "assets/about_imgs/IMG_3429.jpeg",
-    "assets/about_imgs/IMG_4939.jpeg",
-    "assets/about_imgs/IMG_9166.jpeg",
-  ],
   kicker: "Design, engineering, and delivery",
   title: "Visions Creative LLC | Websites for businesses",
   description:
@@ -18,13 +13,10 @@ const siteConfig = {
   headline: "Websites that work.",
   headlineLines: ["Websites", "that work."],
   tagline: "I design, build, and launch.",
-  about:
-    "I build websites for shops, practices, and organizations. I take you off the template, put the site live, and stay until it works.",
   work: {
     title: "Projects",
     desc: "",
   },
-  aboutSection: { title: "About" },
   contact: {
     title: "Contact",
     desc: "",
